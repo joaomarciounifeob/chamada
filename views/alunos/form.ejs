@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>
+    <%= aluno.id ? 'Editar Aluno' : 'Novo Aluno' %> | Escolinha Dominical
+  </title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+</head>
+
+<body class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-100 flex flex-col">
+  <!-- Navbar (partial) -->
+  <%- include('partials/navbar')%>
+
+    <!-- Header -->
+    <header class="py-6 px-4 bg-purple-600 shadow-md">
+      <div class="container mx-auto text-center">
+        <h1 class="text-3xl font-bold text-white">
+          <%= aluno.id ? 'Editar Aluno' : 'Novo Aluno' %>
+        </h1>
+        <p class="text-purple-200">
+          <%= aluno.id ? 'Atualize os dados abaixo' : 'Preencha as informações do novo aluno' %>
+        </p>
+      </div>
+    </header>
+
+    <main class="flex-grow container mx-auto px-4 py-8">
+      <div class="max-w-lg mx-auto bg-white rounded-lg shadow-lg p-6">
+        <form action="<%= aluno.id ? `/alunos/editar/${aluno.id}` : '/alunos/novo' %>" method="POST" class="space-y-6">
+          <!-- Campo Nome -->
+          <div>
+            <label for="nome" class="block text-gray-700 font-medium mb-1">Nome Completo</label>
+            <input type="text" id="nome" name="nome" value="<%= aluno.nome || '' %>" required
+              class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-300"
+              placeholder="Ex.: Maria Oliveira" />
+          </div>
+
+          <!-- Campo Data de Nascimento -->
+          <div>
+            <label for="dataNascimento" class="block text-gray-700 font-medium mb-1">Data de Nascimento</label>
+            <input type="date" id="dataNascimento" name="dataNascimento"
+              value="<%= aluno.dataNascimento ? aluno.dataNascimento.toISOString().slice(0,10) : '' %>"
+              class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-300" />
+          </div>
+
+          <!-- Campo E-mail -->
+          <div>
+            <label for="email" class="block text-gray-700 font-medium mb-1">E-mail</label>
+            <input type="email" id="email" name="email" value="<%= aluno.email || '' %>" required
+              class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-300"
+              placeholder="exemplo@dominio.com" />
+          </div>
+
+          <!-- Campo Telefone -->
+          <div>
+            <label for="telefone" class="block text-gray-700 font-medium mb-1">Telefone (opcional)</label>
+            <input type="text" id="telefone" name="telefone" value="<%= aluno.telefone || '' %>"
+              class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-300"
+              placeholder="(xx) xxxxx-xxxx" />
+          </div>
+
+          <!-- 🚀 Novo campo: Seleção de Turma -->
+          <div>
+            <label for="turmaId" class="block text-gray-700 font-medium mb-1">Turma</label>
+            <select id="turmaId" name="turmaId" required
+              class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-300">
+              <option value="" disabled <%=!aluno.turmaId ? 'selected' : '' %>>-- Selecione uma Turma --</option>
+              <% turmas.forEach(t=> { %>
+                <option value="<%= t.id %>" <%=aluno.turmaId===t.id ? 'selected' : '' %>>
+                  <%= t.nome %>
+                </option>
+                <% }); %>
+            </select>
+          </div>
+
+          <!-- Botões -->
+          <div class="flex justify-between items-center">
+            <a href="/alunos"
+              class="inline-flex items-center px-4 py-2 bg-gray-400 text-white rounded-lg hover:bg-gray-500 transition-colors">
+              <i data-lucide="arrow-left" class="w-5 h-5 mr-2"></i>
+              Voltar
+            </a>
+            <button type="submit"
+              class="inline-flex items-center px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
+              <i data-lucide="<%= aluno.id ? 'save' : 'plus-circle' %>" class="w-5 h-5 mr-2"></i>
+              <%= aluno.id ? 'Atualizar' : 'Criar' %>
+            </button>
+          </div>
+        </form>
+      </div>
+    </main>
+
+    <footer class="bg-gray-200 text-center py-4">
+      <p class="text-sm">&copy; 2025 Escolinha Dominical</p>
+    </footer>
+
+    <script>
+      lucide.createIcons();
+    </script>
+</body>
+
+</html>

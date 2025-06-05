@@ -1,0 +1,115 @@
+<!-- views/partials/navbar.ejs -->
+<nav class="bg-white shadow-md">
+  <div class="container mx-auto px-6 py-3">
+    <div class="flex justify-between items-center">
+      <!-- Logo / Home -->
+      <a href="/" class="text-2xl font-bold text-blue-600 hover:text-blue-700">
+        Escolinha
+      </a>
+
+      <!-- Menu hamburger (visível apenas no mobile) -->
+      <button id="mobile-menu-button"
+        class="md:hidden text-gray-700 hover:text-blue-600 focus:outline-none focus:text-blue-600"
+        aria-label="Abrir menu">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+
+      <!-- Links de navegação (desktop) -->
+      <ul class="hidden md:flex space-x-6">
+        <li>
+          <a href="/dashboard" class="text-gray-700 hover:text-blue-600 transition-colors duration-200">
+            Dashboard
+          </a>
+        </li>
+        <li>
+          <a href="/turmas" class="text-gray-700 hover:text-blue-600 transition-colors duration-200">
+            Turmas
+          </a>
+        </li>
+        <li>
+          <a href="/professores" class="text-gray-700 hover:text-blue-600 transition-colors duration-200">
+            Professores
+          </a>
+        </li>
+        <li>
+          <a href="/alunos" class="text-gray-700 hover:text-blue-600 transition-colors duration-200">
+            Alunos
+          </a>
+        </li>
+        <li>
+          <a href="/chamada" class="text-gray-700 hover:text-blue-600 transition-colors duration-200">
+            Chamada
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Menu mobile (inicialmente oculto) -->
+    <div id="mobile-menu" class="md:hidden mt-4 pb-3 border-t border-gray-200 hidden">
+      <ul class="space-y-2">
+        <li>
+          <a href="/dashboard"
+            class="block py-2 px-4 text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors duration-200">
+            Dashboard
+          </a>
+        </li>
+        <li>
+          <a href="/turmas"
+            class="block py-2 px-4 text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors duration-200">
+            Turmas
+          </a>
+        </li>
+        <li>
+          <a href="/professores"
+            class="block py-2 px-4 text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors duration-200">
+            Professores
+          </a>
+        </li>
+        <li>
+          <a href="/alunos"
+            class="block py-2 px-4 text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors duration-200">
+            Alunos
+          </a>
+        </li>
+        <li>
+          <a href="/chamada"
+            class="block py-2 px-4 text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors duration-200">
+            Chamada
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<script>
+  // Toggle do menu mobile
+  document.getElementById('mobile-menu-button').addEventListener('click', function () {
+    const mobileMenu = document.getElementById('mobile-menu');
+    const button = this;
+    const icon = button.querySelector('svg path');
+
+    mobileMenu.classList.toggle('hidden');
+
+    // Trocar ícone entre hamburger e X
+    if (mobileMenu.classList.contains('hidden')) {
+      icon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
+    } else {
+      icon.setAttribute('d', 'M6 18L18 6M6 6l12 12');
+    }
+  });
+
+  // Fechar menu mobile ao clicar em um link
+  document.querySelectorAll('#mobile-menu a').forEach(link => {
+    link.addEventListener('click', function () {
+      const mobileMenu = document.getElementById('mobile-menu');
+      const button = document.getElementById('mobile-menu-button');
+      const icon = button.querySelector('svg path');
+
+      mobileMenu.classList.add('hidden');
+      icon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
+    });
+  });
+</script>

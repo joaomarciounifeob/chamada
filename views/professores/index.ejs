@@ -1,0 +1,100 @@
+<!-- views/professores/index.ejs -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Professores | Escolinha Dominical</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+</head>
+
+<body class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-100 flex flex-col">
+  <!-- Navbar (partial) -->
+  <%- include('../partials/navbar')%>
+
+    <!-- Header -->
+    <header class="py-6 px-4 bg-green-600 shadow-md">
+      <div class="container mx-auto text-center">
+        <h1 class="text-3xl font-bold text-white">Professores</h1>
+        <p class="text-green-200">Gerencie os professores cadastrados</p>
+      </div>
+    </header>
+
+    <main class="flex-grow container mx-auto px-4 py-8">
+      <!-- Botão “Novo Professor” -->
+      <div class="flex justify-end mb-4">
+        <a href="/professores/novo"
+          class="inline-flex items-center px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors">
+          <i data-lucide="plus-circle" class="w-5 h-5 mr-2"></i>
+          Novo Professor
+        </a>
+      </div>
+
+      <% if (professores.length===0) { %>
+        <div class="text-center text-gray-600">
+          Nenhum professor cadastrado.
+        </div>
+        <% } else { %>
+          <div class="overflow-x-auto">
+            <table class="min-w-full bg-white rounded-lg shadow-md">
+              <thead>
+                <tr class="bg-green-600 text-white">
+                  <th class="px-6 py-3 text-left">ID</th>
+                  <th class="px-6 py-3 text-left">Nome</th>
+                  <th class="px-6 py-3 text-left">E-mail</th>
+                  <th class="px-6 py-3 text-left">Telefone</th>
+                  <th class="px-6 py-3 text-center">Ações</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-200">
+                <% professores.forEach(professor=> { %>
+                  <tr>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <%= professor.id %>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <%= professor.nome %>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <%= professor.email %>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <%= professor.telefone || '—' %>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-center">
+                      <!-- Botão “Editar” -->
+                      <a href="/professores/editar/<%= professor.id %>"
+                        class="inline-flex items-center px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition-colors mr-2">
+                        <i data-lucide="edit-2" class="w-4 h-4 mr-1"></i>
+                        Editar
+                      </a>
+                      <!-- Form de “Excluir” -->
+                      <form action="/professores/deletar/<%= professor.id %>" method="POST" class="inline-block"
+                        onsubmit="return confirm('Deseja realmente excluir este professor?');">
+                        <button type="submit"
+                          class="inline-flex items-center px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 transition-colors">
+                          <i data-lucide="trash-2" class="w-4 h-4 mr-1"></i>
+                          Excluir
+                        </button>
+                      </form>
+                    </td>
+                  </tr>
+                  <% }) %>
+              </tbody>
+            </table>
+          </div>
+          <% } %>
+    </main>
+
+    <footer class="bg-gray-200 text-center py-4">
+      <p class="text-sm">&copy; 2025 Escolinha Dominical</p>
+    </footer>
+
+    <script>
+      lucide.createIcons();
+    </script>
+</body>
+
+</html>

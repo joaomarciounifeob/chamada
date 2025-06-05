@@ -1,0 +1,40 @@
+<!-- views/chamada/semAlunos.ejs -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chamada — Sem Alunos | Escolinha Dominical</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-100 flex flex-col">
+  <!-- Navbar (partial) -->
+  <%- include('../partials/navbar')%>
+
+    <!-- Header -->
+    <header class="py-6 px-4 bg-orange-600 shadow-md">
+      <div class="container mx-auto text-center">
+        <h1 class="text-3xl font-bold text-white">Fazer Chamada</h1>
+        <p class="text-orange-200">Turma Sem Alunos</p>
+      </div>
+    </header>
+
+    <main class="flex-grow container mx-auto px-4 py-8">
+      <div class="max-w-md mx-auto bg-white rounded-lg shadow-lg p-6 text-center">
+        <p class="text-gray-700 mb-4">A turma selecionada não possui alunos cadastrados.</p>
+        <a href="/chamada"
+          class="inline-flex items-center px-4 py-2 bg-gray-400 text-white rounded-lg hover:bg-gray-500 transition-colors">
+          <i data-lucide="arrow-left" class="w-5 h-5 mr-2"></i>
+          Voltar
+        </a>
+      </div>
+    </main>
+
+    <footer class="bg-gray-200 text-center py-4">
+      <p class="text-sm">&copy; 2025 Escolinha Dominical</p>
+    </footer>
+</body>
+
+</html>

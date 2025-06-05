@@ -1,0 +1,68 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  // Se você tiver "output = '../generated'", comente ou remova esta linha para usar o local padrão
+  // output = "../generated"
+}
+
+model Turma {
+  id          Int       @id @default(autoincrement())
+  nome        String
+  descricao   String?
+  createdAt   DateTime  @default(now())
+
+  professorId Int
+  professor   Professor @relation(fields: [professorId], references: [id])
+
+  // RELAÇÃO: uma Turma pode ter vários Alunos
+  alunos      Aluno[]
+
+  // RELAÇÃO: uma Turma pode ter várias Chamadas
+  chamadas    Chamada[]
+}
+
+model Professor {
+  id         Int      @id @default(autoincrement())
+  nome       String
+  email      String   @unique
+  telefone   String?
+  createdAt  DateTime @default(now())
+
+  // RELAÇÃO: um Professor pode ter várias Turmas
+  turmas     Turma[]
+}
+
+model Aluno {
+  id             Int      @id @default(autoincrement())
+  nome           String
+  dataNascimento DateTime?
+  email          String   @unique
+  telefone       String?
+  createdAt      DateTime @default(now())
+
+  turmaId        Int
+  turma          Turma    @relation(fields: [turmaId], references: [id])
+
+  // RELAÇÃO: um Aluno pode ter várias Chamadas
+  chamadas       Chamada[]
+}
+
+model Chamada {
+  id         Int      @id @default(autoincrement())
+  data       DateTime
+  status     Boolean
+
+  alunoId    Int
+  aluno      Aluno    @relation(fields: [alunoId], references: [id])
+
+  turmaId    Int
+  turma      Turma    @relation(fields: [turmaId], references: [id])
+
+  createdAt  DateTime @default(now())
+
+  @@unique([alunoId, turmaId, data])
+}

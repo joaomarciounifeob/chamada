@@ -1,0 +1,92 @@
+<!-- views/chamada/form.ejs -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chamada — Marcar Presença | Escolinha Dominical</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+</head>
+
+<body class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-100 flex flex-col">
+  <!-- Navbar (partial) -->
+  <%- include('../partials/navbar')%>
+
+    <!-- Header -->
+    <header class="py-6 px-4 bg-orange-600 shadow-md">
+      <div class="container mx-auto text-center">
+        <h1 class="text-3xl font-bold text-white">Chamada</h1>
+        <p class="text-orange-200">Data: <strong>
+            <%= dataChamada %>
+          </strong></p>
+      </div>
+    </header>
+
+    <main class="flex-grow container mx-auto px-4 py-8">
+      <div class="max-w-2xl mx-auto bg-white rounded-lg shadow-lg p-6">
+        <form action="/chamada/salvar" method="POST" class="space-y-6">
+          <!-- Campos ocultos para turmaId e dataChamada -->
+          <input type="hidden" name="turmaId" value="<%= turmaId %>" />
+          <input type="hidden" name="dataChamada" value="<%= dataChamada %>" />
+
+          <!-- Tabela de Alunos com status -->
+          <div class="overflow-x-auto">
+            <table class="min-w-full bg-white rounded-lg shadow-md">
+              <thead>
+                <tr class="bg-orange-600 text-white">
+                  <th class="px-6 py-3 text-left">#</th>
+                  <th class="px-6 py-3 text-left">Aluno</th>
+                  <th class="px-6 py-3 text-center">Presente?</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-200">
+                <% alunos.forEach((aluno, index)=> { %>
+                  <tr>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <%= index + 1 %>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <%= aluno.nome %>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-center">
+                      <!-- Checkbox para marcar presença: name="status_<id>" -->
+                      <input type="checkbox" name="status_<%= aluno.id %>"
+                        class="h-5 w-5 text-green-600 focus:ring-green-500 border-gray-300 rounded"
+                        <%=chamadasMap[aluno.id] ? 'checked' : '' %>
+                      />
+                    </td>
+                  </tr>
+                  <% }); %>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Botões -->
+          <div class="flex justify-between items-center mt-6">
+            <a href="/chamada"
+              class="inline-flex items-center px-4 py-2 bg-gray-400 text-white rounded-lg hover:bg-gray-500 transition-colors">
+              <i data-lucide="arrow-left" class="w-5 h-5 mr-2"></i>
+              Voltar
+            </a>
+            <button type="submit"
+              class="inline-flex items-center px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors">
+              <i data-lucide="save" class="w-5 h-5 mr-2"></i>
+              Salvar Chamada
+            </button>
+          </div>
+        </form>
+      </div>
+    </main>
+
+    <footer class="bg-gray-200 text-center py-4">
+      <p class="text-sm">&copy; 2025 Escolinha Dominical</p>
+    </footer>
+
+    <script>
+      lucide.createIcons();
+    </script>
+</body>
+
+</html>

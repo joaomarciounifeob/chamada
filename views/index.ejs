@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Escolinha Dominical</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+</head>
+
+<body class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-100">
+
+
+  <!-- Header simples -->
+  <header class="py-8 px-6">
+    <div class="container mx-auto text-center">
+      <h1 class="text-4xl font-bold text-gray-800 mb-2">Escolinha Dominical</h1>
+      <p class="text-gray-600">Sistema de Gerenciamento</p>
+    </div>
+  </header>
+
+  <!-- Cards principais -->
+  <main class="container mx-auto px-6 pb-16">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+
+      <!-- Card: Adicionar Turma -->
+      <a href="/turmas" class="group block">
+        <div
+          class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border-2 border-transparent hover:border-blue-200">
+          <div class="flex flex-col items-center text-center">
+            <div
+              class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-blue-200 transition-colors duration-300">
+              <i data-lucide="users" class="w-8 h-8 text-blue-600"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">Turmas</h3>
+            <p class="text-gray-600 text-sm">Gerenciar turmas</p>
+          </div>
+        </div>
+      </a>
+
+      <!-- Card: Adicionar Professor -->
+      <a href="/professores" class="group block">
+        <div
+          class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border-2 border-transparent hover:border-green-200">
+          <div class="flex flex-col items-center text-center">
+            <div
+              class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-green-200 transition-colors duration-300">
+              <i data-lucide="graduation-cap" class="w-8 h-8 text-green-600"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">Professores</h3>
+            <p class="text-gray-600 text-sm">Gerenciar professores</p>
+          </div>
+        </div>
+      </a>
+
+      <!-- Card: Adicionar Aluno -->
+      <a href="/alunos" class="group block">
+        <div
+          class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border-2 border-transparent hover:border-purple-200">
+          <div class="flex flex-col items-center text-center">
+            <div
+              class="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-purple-200 transition-colors duration-300">
+              <i data-lucide="user-plus" class="w-8 h-8 text-purple-600"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">Alunos</h3>
+            <p class="text-gray-600 text-sm">Gerenciar alunos</p>
+          </div>
+        </div>
+      </a>
+
+      <!-- Card: Fazer Chamada -->
+      <a href="/chamada" class="group block">
+        <div
+          class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border-2 border-transparent hover:border-orange-200">
+          <div class="flex flex-col items-center text-center">
+            <div
+              class="w-16 h-16 bg-orange-100 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-orange-200 transition-colors duration-300">
+              <i data-lucide="clipboard-check" class="w-8 h-8 text-orange-600"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">Chamada</h3>
+            <p class="text-gray-600 text-sm">Fazer chamada</p>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </main>
+
+  <script>
+    lucide.createIcons();
+  </script>
+
+</body>
+
+</html>

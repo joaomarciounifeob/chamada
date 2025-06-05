@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard | Escolinha Dominical</title>
+
+  <!-- Tailwind via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js via CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-100 flex flex-col">
+  <!-- Navbar (partial) -->
+  <%- include('partials/navbar')%>
+
+    <!-- Header -->
+    <header class="py-8 px-6 bg-blue-600 shadow-md">
+      <div class="container mx-auto text-center">
+        <h1 class="text-4xl font-bold text-white">Dashboard Geral</h1>
+        <p class="text-blue-200 mt-2">Visão geral de turmas, professores, alunos e chamadas</p>
+      </div>
+    </header>
+
+    <main class="flex-grow container mx-auto px-6 py-8">
+
+      <!-- 1. Cards de indicadores -->
+      <div id="cards-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+        <!-- Os cards serão inseridos aqui via JS -->
+      </div>
+
+      <!-- 2. Gráfico de % de presença por Turma -->
+      <section class="bg-white rounded-2xl shadow-lg p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Percentual de Presença (todas as Chamadas)</h2>
+        <canvas id="presencaChart" class="w-full h-64"></canvas>
+      </section>
+
+    </main>
+
+    <footer class="bg-gray-200 text-center py-4">
+      <p class="text-sm">&copy; 2025 Escolinha Dominical</p>
+    </footer>
+
+    <script>
+      // Ao carregar a página, fazemos uma requisição para /dashboard/data
+      async function carregarDashboard() {
+        try {
+          const response = await fetch('/dashboard/data');
+          if (!response.ok) throw new Error('Erro ao buscar dados');
+          const data = await response.json();
+
+          // 1) Preencher os cards de indicadores
+          const container = document.getElementById('cards-container');
+          container.innerHTML = `
+          <div class="bg-white rounded-2xl shadow-lg p-6 flex flex-col items-center">
+            <h2 class="text-xl font-semibold text-gray-700 mb-2">Total de Turmas</h2>
+            <p class="text-5xl font-bold text-blue-600">${data.totalTurmas}</p>
+          </div>
+          <div class="bg-white rounded-2xl shadow-lg p-6 flex flex-col items-center">
+            <h2 class="text-xl font-semibold text-gray-700 mb-2">Total de Professores</h2>
+            <p class="text-5xl font-bold text-green-600">${data.totalProfessores}</p>
+          </div>
+          <div class="bg-white rounded-2xl shadow-lg p-6 flex flex-col items-center">
+            <h2 class="text-xl font-semibold text-gray-700 mb-2">Total de Alunos</h2>
+            <p class="text-5xl font-bold text-purple-600">${data.totalAlunos}</p>
+          </div>
+          <div class="bg-white rounded-2xl shadow-lg p-6 flex flex-col items-center">
+            <h2 class="text-xl font-semibold text-gray-700 mb-2">Chamadas neste Mês</h2>
+            <p class="text-5xl font-bold text-orange-600">${data.totalChamadasMes}</p>
+          </div>
+        `;
+
+          // 2) Preparar dados para o gráfico
+          const presencaData = data.presencaData;
+          const labels = presencaData.map(item => item.nome);
+          const dataPercent = presencaData.map(item => item.percent);
+
+          // 3) Desenhar o gráfico
+          const ctx = document.getElementById('presencaChart').getContext('2d');
+          new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: labels,
+              datasets: [{
+                label: '% de Presença',
+                data: dataPercent,
+                backgroundColor: 'rgba(59, 130, 246, 0.7)',
+                borderColor: 'rgba(59, 130, 246, 1)',
+                borderWidth: 1
+              }]
+            },
+            options: {
+              responsive: true,
+              scales: {
+                y: {
+                  beginAtZero: true,
+                  max: 100,
+                  ticks: { callback: v => v + '%' }
+                }
+              },
+              plugins: {
+                legend: { display: false },
+                tooltip: {
+                  callbacks: { label: ctx => ctx.parsed.y + '%' }
+                }
+              }
+            }
+          });
+
+        } catch (err) {
+          console.error(err);
+          // Opcional: mostrar mensagem de erro na tela
+          document.getElementById('cards-container').innerHTML = `
+          <div class="col-span-4 text-center text-red-600">
+            Não foi possível carregar o dashboard.
+          </div>
+        `;
+        }
+      }
+
+      // Chama a função quando a página terminar de carregar
+      window.addEventListener('DOMContentLoaded', carregarDashboard);
+    </script>
+</body>
+
+</html>
