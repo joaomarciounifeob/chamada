@@ -1,5 +1,5 @@
 # 📚 Chamada
-
+JOAO MARCIO GODOY RODRIGUES RA24001917
 Aplicativo web para controle de chamadas, desenvolvido com **Node.js**, **Express**, **EJS** e **Prisma**.
 
 ## 🚀 Funcionalidades
@@ -24,3 +24,4 @@ Aplicativo web para controle de chamadas, desenvolvido com **Node.js**, **Expres
 ### 3. Configure o .env com as variáveis DATABASE_URL e PORT (Use o PostgreSQL para não ter de modificar o PRISMA)
 
 ### 4. Execute o comando: node index.js
+
